@@ -18,6 +18,8 @@ https://github.com/PARC/CCNx_Distillery
 This library depends on LongBow. 
 - https://github.com/PARC/LongBow
 - https://github.com/PARC/Libparc
+- https://github.com/PARC/Libccnx-common
+- https://github.com/PARC/Libccnx-transport-rta
 
 ## Getting Started ##
 

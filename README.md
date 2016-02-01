@@ -1,43 +1,106 @@
-Libccnx-common
+Libccnx-portal
 =======
+A CCNx base API
 
-The CCNx Common Library
-==========
+## Quick Start ##
+```
+$ git clone git@github.com:PARC/Libccnx-portal.git Libccnx-portal
+$ mkdir Libccnx-portal.build
+$ cd Libccnx-portal.build
+$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} ../Libccnx-portal
+$ make
+$ make test
+$ make install
+```
 
 ## Introduction ##
 
-This is a library of CCNx functions and data structures.
+The CCNx Portal API is a simple API to communicate via Interests and Content Objects. It connects to a transport stack (like [Transport RTA](https://github.com/PARC/Libccnx-transport-rta)).  
 
-## Overview ##
+## Using Libccnx-portal ##
 
-For a full CCNx software distribution please look at the CCNx Distillery
-https://github.com/PARC/CCNx_Distillery
+### Distillery ###
 
-## Dependencies ##
+Libccnx-portal is part of [CCNx Distillery](https://github.com/PARC/CCNx_Distillery). You may want to get the software via that distribution if you want to work on CCNx.
 
-This library depends on LongBow. 
-- https://github.com/PARC/LongBow
-- https://github.com/PARC/Libparc
-- https://github.com/PARC/Libccnx-common
-- https://github.com/PARC/Libccnx-transport-rta
+### Platforms ###
 
-## Getting Started ##
+Libccnx-portal has been tested in:
 
-Build and install LongBow by executing
+- Ubuntu 14.04 (x86_64)
+- MacOSX 10.10
+- MacOSX 10.11
+
+Other platforms and architectures may work.
+
+### Dependencies ###
+
+Build dependencies:
+
+- c99 ( clang / gcc )
+- CMake 3.4
+
+Basic dependencies:
+
+- OpenSSL
+- pthreads
+- Libevent
+- [LongBow](https://github.com/PARC/LongBow)
+- [Libparc](https://github.com/PARC/Libparc)
+- [Libccnx-common](https://github.com/PARC/Libccnx-common)
+- [Libccnx-transport-rta](https://github.com/PARC/Libccnx-transport-rta)
+
+
+Documentation dependencies:
+
+- Doxygen
+
+
+### Getting Started ###
+
+Libccnx-portal is built using cmake. You will need to have CMake 3.4 installed in order to build it.
+
 ```
-mkdir build
-cd build
-cmake ..
-make
-make install
-make test
+Download Libccnx-portal
+$ git clone git@github.com:PARC/Libccnx-portal.git Libccnx-portal
+
+Create build directory
+$ mkdir Libccnx-portal.build
+$ cd Libccnx-portal.build
+
+Prepare the build, give an install directory
+$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} ../Libccnx-portal
+
+Compile the software
+$ make
+
+Run unit tests
+$ make test
+
+Install the software
+$ make install
 ```
 
-This will create the `include` and `lib` directories containing the necessary files to compile with LongBow.
+This will create the `include` and `lib` directories containing the necessary files to compile with LongBow in the `${INSTALL_DIR}`.
+
+
+
+### Using Libccnx-portal ###
+
+Libccnx-portal is a set of functions and data structures for C. You can use it in your code by including the right header files and linking to the Libccnx_api_portal library.
+
+```
+CCNX_HOME=<directory-where-Libccnx-portal-is-installed>
+
+ -I${CCNX_HOME}/include -L${CCNX_HOME}/lib -lccnx_api_portal
+```
 
 ### Contact ###
 
-Please see http://www.ccnx.org/
+- [Libccnx-portal GitHub](https://github.com/PARC/Libccnx-portal)
+- [CCNx Website](http://www.ccnx.org/)
+- [CCNx Mailing List](https://www.ccnx.org/mailman/listinfo/ccnx/)
+
 
 ### License ###
 

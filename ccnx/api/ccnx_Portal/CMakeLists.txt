@@ -14,6 +14,7 @@ set(CCNX_API_PORTAL_HEADERS
 	)
 
 set(CCNX_API_PORTAL_SOURCE_FILES
+   ${CCNX_API_PORTAL_HEADERS}
     ccnx_Portal.c 
     ccnx_PortalFactory.c 
     ccnx_PortalAttributes.c 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC)
+ * Copyright (c) 2013-2016, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
  * This Portal Protocol Stack implementation simulates a network stack for the purposes of testing and development.
  *
  * @author Glenn Scott, Palo Alto Research Center (Xerox PARC)
- * @copyright 2013-2015, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC).  All rights reserved.
+ * @copyright 2013-2016, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC).  All rights reserved.
  */
 #ifndef __CCNx_Portal_API__ccnxPortalAPI__
 #define __CCNx_Portal_API__ccnxPortalAPI__

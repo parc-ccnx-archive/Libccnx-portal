@@ -26,7 +26,7 @@
  */
 /**
  * @file ccnx_PortalAttributes.h
- * @brief Attributes related to the {@link CCNxPortal} instance.
+ * @brief Attributes related to the `CCNxPortal` instance.
  *
  * @author Glenn Scott, Palo Alto Research Center (Xerox PARC)
  * @copyright 2013-2015, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC).  All rights reserved.
@@ -38,7 +38,6 @@
 
 struct ccnx_portal_attributes;
 /**
- * @typedef CCNxPortalAttributes
  * @brief The attributes for the instance of {@link CCNxPortal}
  */
 typedef struct ccnx_portal_attributes CCNxPortalAttributes;

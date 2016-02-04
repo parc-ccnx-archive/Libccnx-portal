@@ -74,7 +74,7 @@ _ccnxPortalAPI_Stop(void *privateData)
 }
 
 static bool
-_ccnxPortalAPI_Send(void *privateData, const CCNxMetaMessage *portalMessage, const uint64_t *microSeconds)
+_ccnxPortalAPI_Send(void *privateData, const CCNxMetaMessage *portalMessage, const CCNxStackTimeout *microSeconds)
 {
     const _CCNxPortalAPIContext *transportContext = (_CCNxPortalAPIContext *) privateData;
 
@@ -85,7 +85,7 @@ _ccnxPortalAPI_Send(void *privateData, const CCNxMetaMessage *portalMessage, con
 }
 
 static CCNxMetaMessage *
-_ccnxPortalAPI_Receive(void *privateData, const uint64_t *microSeconds)
+_ccnxPortalAPI_Receive(void *privateData, const CCNxStackTimeout *microSeconds)
 {
     const _CCNxPortalAPIContext *transportContext = (_CCNxPortalAPIContext *) privateData;
 
@@ -117,13 +117,13 @@ _ccnxPortalAPI_SetAttributes(void *privateData, const CCNxPortalAttributes *attr
 }
 
 static bool
-_ccnxPortalAPI_Listen(void *privateData, const CCNxName *name, const uint64_t *microSeconds)
+_ccnxPortalAPI_Listen(void *privateData, const CCNxName *name, const CCNxStackTimeout *microSeconds)
 {
     return true;
 }
 
 static bool
-_ccnxPortalAPI_Ignore(void *privateData, const CCNxName *name, const uint64_t *microSeconds)
+_ccnxPortalAPI_Ignore(void *privateData, const CCNxName *name, const CCNxStackTimeout *microSeconds)
 {
     return true;
 }

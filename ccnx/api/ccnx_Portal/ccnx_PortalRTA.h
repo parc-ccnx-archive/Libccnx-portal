@@ -88,7 +88,6 @@ CCNxPortal *ccnxPortalRTA_Chunked(const CCNxPortalFactory *factory, const CCNxPo
  * {
  *     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(factory, ccnxPortalRTA_LoopBack);
  * }
- * <#example#>
  * @endcode
  */
 CCNxPortal *ccnxPortalRTA_LoopBack(const CCNxPortalFactory *factory, const CCNxPortalAttributes *attributes);

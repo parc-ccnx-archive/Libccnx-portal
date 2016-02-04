@@ -69,3 +69,4 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
 endif()
 
 add_subdirectory(ccnx/api/ccnx_Portal)
+add_subdirectory(documentation)

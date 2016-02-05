@@ -48,13 +48,13 @@ struct CCNxPortalStack {
 
     void (*stop)(void *privateData);
 
-    CCNxMetaMessage *(*read)(void *privateData, const uint64_t *microSeconds);
+    CCNxMetaMessage *(*read)(void *privateData, const CCNxStackTimeout *microSeconds);
 
-    bool (*write)(void *privateData, const CCNxMetaMessage *portalMessage, const uint64_t *microSeconds);
+    bool (*write)(void *privateData, const CCNxMetaMessage *portalMessage, const CCNxStackTimeout *microSeconds);
 
-    bool (*listen)(void *privateData, const CCNxName *restrict name, const uint64_t *microSeconds);
+    bool (*listen)(void *privateData, const CCNxName *restrict name, const CCNxStackTimeout *microSeconds);
 
-    bool (*ignore)(void *privateData, const CCNxName *restrict name, const uint64_t *microSeconds);
+    bool (*ignore)(void *privateData, const CCNxName *restrict name, const CCNxStackTimeout *microSeconds);
 
     int (*getFileId)(void *privateData);
 
@@ -88,10 +88,10 @@ ccnxPortalStack_Create(const CCNxPortalFactory *factory,
                        const CCNxPortalAttributes *attributes,
                        void (*start)(void *privateData),
                        void (*stop)(void *privateData),
-                       CCNxMetaMessage *(*receive)(void *privateData, const uint64_t *microSeconds),
-                       bool (*send)(void *privateData, const CCNxMetaMessage *message, const uint64_t *microSeconds),
-                       bool (*listen)(void *privateData, const CCNxName *name, const uint64_t *microSeconds),
-                       bool (*ignore)(void *privateData, const CCNxName *name, const uint64_t *microSeconds),
+                       CCNxMetaMessage *(*receive)(void *privateData, const CCNxStackTimeout *microSeconds),
+                       bool (*send)(void *privateData, const CCNxMetaMessage *message, const CCNxStackTimeout *microSeconds),
+                       bool (*listen)(void *privateData, const CCNxName *name, const CCNxStackTimeout *microSeconds),
+                       bool (*ignore)(void *privateData, const CCNxName *name, const CCNxStackTimeout *microSeconds),
                        int (*getFileId)(void *privateData),
                        bool (*setAttributes)(void *privateData, const CCNxPortalAttributes *attributes),
                        CCNxPortalAttributes * (*getAttributes)(void *privateData),
@@ -133,7 +133,7 @@ ccnxPortalStack_Stop(const CCNxPortalStack *portalStack)
 }
 
 CCNxMetaMessage *
-ccnxPortalStack_Receive(const CCNxPortalStack *restrict portalStack, const uint64_t *microSeconds)
+ccnxPortalStack_Receive(const CCNxPortalStack *restrict portalStack, const CCNxStackTimeout *microSeconds)
 {
     CCNxMetaMessage *result = portalStack->read(portalStack->privateData, microSeconds);
 
@@ -141,7 +141,7 @@ ccnxPortalStack_Receive(const CCNxPortalStack *restrict portalStack, const uint6
 }
 
 bool
-ccnxPortalStack_Send(const CCNxPortalStack *portalStack, const CCNxMetaMessage *portalMessage, const uint64_t *microSeconds)
+ccnxPortalStack_Send(const CCNxPortalStack *portalStack, const CCNxMetaMessage *portalMessage, const CCNxStackTimeout *microSeconds)
 {
     return portalStack->write(portalStack->privateData, portalMessage, microSeconds);
 }
@@ -153,13 +153,13 @@ ccnxPortalStack_SetAttributes(const CCNxPortalStack *portalStack, const CCNxPort
 }
 
 bool
-ccnxPortalStack_Listen(const CCNxPortalStack *portalStack, const CCNxName *name, const uint64_t *microSeconds)
+ccnxPortalStack_Listen(const CCNxPortalStack *portalStack, const CCNxName *name, const CCNxStackTimeout *microSeconds)
 {
     return portalStack->listen(portalStack->privateData, name, microSeconds);
 }
 
 bool
-ccnxPortalStack_Ignore(const CCNxPortalStack *portalStack, const CCNxName *name, const uint64_t *microSeconds)
+ccnxPortalStack_Ignore(const CCNxPortalStack *portalStack, const CCNxName *name, const CCNxStackTimeout *microSeconds)
 {
     return portalStack->ignore(portalStack->privateData, name, microSeconds);
 }

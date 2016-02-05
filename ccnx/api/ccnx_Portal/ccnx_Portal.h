@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC)
+ * Copyright (c) 2014-2016, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,22 +28,53 @@
  * @file ccnx_Portal.h
  * @brief A low-level API for CCN Interests, Content Objects, and Control messages.
  *
+ * \mainpage CCNxPortal
+ *  CCNxPortal is a low-level API providing direct access to individual CCNxInterest and CCNxContentObject messages.
+ * The API provides very basic access to the "registration" operations for applications to receive CCNxInterest messages and
+ * facilities for using different, pre-configured protocol stacks.
+ *
+ * An application may have many `CCNxPortal` instances, each instance representing a particular protocol stack configuration.
+ * Normally an application uses a `CCNxPortalFactory`to create instances rather than creating `CCNxPortal` instances directly.
+ * This permits a factory to be setup to provide common attributes and configuration parameters shared by multiple `CCNxPortal`
+ * instances.
+ *
+ * The input/output functions, whether direct like `ccnxPortal_Send` and `ccnxPortal_Receive`,
+ * in indirect (such as `ccnxPortal_Listen`), take a parameter that specifiess a timeout behaviour for the function.
+ * As a result, an application may use the functions as blocking or non-blocking I/O as needed without having to use
+ * multiple `CCNxPortal` instances with different blocking or non-blocking behaviour.
+ *
+ * Specifying the timeout behaviour consists of providing a pointer to a `CCNxStackTimeout` value,
+ * or the value `CCNxStackTimeout_Never`.
+ *
+ * * `CCNxStackTimeout_Immediate`:
+ * The function returns immediately,
+ * after first attempting to perform its function provided it can complete without any blocking.
+ * For example `ccnxPortal_Receive` will return either the next `CCNxMetaMessage`,
+ * if one is waiting, or NULL indicating no message was available.
+ * The function `ccnxPortal_Send` will return after first attempting to enqueue its message on the output message queue.
+ * If the function would have to wait for space on the output message queue, then it returns indicating failure.
+ *
+ * * `CCNxStackTimeout_Microseconds()`:
+ * Functions will perform their operations blocking only for the maximum time
+ * specified.
+ *
+ * *  `CCNxStackTimeout_Never`:
+ * Functions will perform their operations potentially blocking forever.
+ *
  * @author Glenn Scott, Palo Alto Research Center (Xerox PARC)
- * @copyright 2014-2015, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC).  All rights reserved.
+ * @copyright 2014-2016, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC).  All rights reserved.
  */
 #ifndef CCNx_Portal_API_ccnx_Portal_h
 #define CCNx_Portal_API_ccnx_Portal_h
 
 struct ccnx_portal_status;
 /**
- * @typedef CCNxPortalStatus
  * @brief The status of the CCNx Portal
  */
 typedef struct ccnx_portal_status CCNxPortalStatus;
 
 struct ccnx_portal;
 /**
- * @typedef CCNxPortal
  * @brief The CCNx Portal
  */
 typedef struct ccnx_portal CCNxPortal;
@@ -57,9 +88,6 @@ typedef struct ccnx_portal CCNxPortal;
 
 #include <ccnx/common/ccnx_Interest.h>
 #include <ccnx/common/ccnx_ContentObject.h>
-
-#include <ccnx/transport/common/transport.h>
-#include <ccnx/transport/common/transport_MetaMessage.h>
 
 /**
  * Create a new `CCNxPortal` instance with the given {@link CCNxPortalStack}.
@@ -204,13 +232,15 @@ bool ccnxPortal_SetAttributes(CCNxPortal *portal, const CCNxPortalAttributes *at
  * Listen for CCN Interests in the given {@link CCNxName}, i.e., with the given name prefix.
  *
  * If the local CCN router is available, this induces a route update for the given name.
- * Messaging with the local CCN router are governed by the factory properties named by `CCNxPortalFactory_LocalRouterTimeout`
+ * Messaging with the local CCN router are governed by the `CCNxPortalFactory` properties named by `CCNxPortalFactory_LocalRouterTimeout`
+ *
+ * An invocation of the function will return after the time specified by the `CCNxStackTimeout` value,
+ * or the function will potentially wait forever if the value is `CCNxStackTimeout_Never`
  *
  * @param [in] portal A pointer to a `CCNxPortal` instance.
  * @param [in] name A `CCNxName` prefix used to filter and accept Interests.
  * @param [in] secondsToLive The number of seconds for this Listen to remain active.
- * @param [in] microSeconds A pointer to a uint64_t containing the number of microSeconds to wait for the stack to perform the listen operation,
- *                          or NULL to wait potentially forever.
+ * @param [in] timeout A pointer to a `CCNxStackTimeout` value, or `CCNxStackTimeout_Never`.
  *
  * @return `true` The operation succeeded.
  * @return `false` The operation failed. See {@link ccnxPortal_GetStatus}.
@@ -231,13 +261,17 @@ bool ccnxPortal_SetAttributes(CCNxPortal *portal, const CCNxPortalAttributes *at
  * @see {@link ccnxPortal_Ignore}
  * @see {@link ccnxPortalFactory_CreatePortal}
  */
-bool ccnxPortal_Listen(CCNxPortal *restrict portal, const CCNxName *restrict name, const time_t secondsToLive, uint64_t *microSeconds);
+bool ccnxPortal_Listen(CCNxPortal *restrict portal, const CCNxName *restrict name, const time_t secondsToLive, const CCNxStackTimeout *timeout);
 
 /**
  * Stop listening for Interests with the given {@link CCNxName}.
  *
+ * An invocation of the function will return after the time specified by the `CCNxStackTimeout` value,
+ * or the function will potentially wait forever if the value is `CCNxStackTimeout_Never`
+ *
  * @param [in,out] portal A pointer to a `CCNxPortal` instance.
  * @param [in] name A `CCNxName` name to be ignored.
+ * @param [in] timeout A pointer to a `CCNxStackTimeout` value, or `CCNxStackTimeout_Never`.
  *
  * @return `true` The operation succeeded
  * @return `false` The operation failed. See {@link CCNxPortalStatus}.
@@ -261,10 +295,10 @@ bool ccnxPortal_Listen(CCNxPortal *restrict portal, const CCNxName *restrict nam
  * @see {@link ccnxPortal_Listen}
  * @see {@link CCNxPortalStatus}
  */
-bool ccnxPortal_Ignore(CCNxPortal *portal, const CCNxName *name, const uint64_t *microSeconds);
+bool ccnxPortal_Ignore(CCNxPortal *portal, const CCNxName *name, const CCNxStackTimeout *timeout);
 
 /**
- * Send a {@link CCNxMetaMessage} to the transport stack.
+ * Send a {@link CCNxMetaMessage} to the protocol stack.
  *
  * The portal message may be an Interest, Content Object, or Control Message.
  * The exact type wrapped by the portal message may be determined via
@@ -272,17 +306,20 @@ bool ccnxPortal_Ignore(CCNxPortal *portal, const CCNxName *name, const uint64_t 
  * {@link ccnxMetaMessage_IsControl}. This enables a seamless API for both
  * both producer and consumer applications.
  *
+ * An invocation of the function will wait for the time specified by the pointer to the `CCNxStackTimeout` value,
+ * or the function will potentially wait forever if the value is `CCNxStackTimeout_Never`.
+ *
  * @param [in,out] portal A pointer to a `CCNxPortal` instance.
  * @param [in] message A pointer to a `CCNxMetaMessage` instance.
+ * @param [in] timeout A pointer to a `CCNxStackTimeout` value, or `CCNxStackTimeout_Never`.
  *
  * @return `true` No errors occurred.
- * @return `false` A transport stack error occurred while writing the message (see `ccnxPortal_GetError`).
+ * @return `false` A protocol stack error occurred while writing the message (see `ccnxPortal_GetError`).
  *
  * Example:
  * @code
  * {
- *     CCNxPortal *portal =
- *         ccnxPortalFactory_CreatePortal(factory, ccnxPortalRTA_LoopBack);
+ *     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(factory, ccnxPortalRTA_LoopBack);
  *
  *     CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
  *     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
@@ -302,10 +339,10 @@ bool ccnxPortal_Ignore(CCNxPortal *portal, const CCNxName *name, const uint64_t 
  *
  * @see {@link ccnxPortal_Receive}
  */
-bool ccnxPortal_Send(CCNxPortal *restrict portal, const CCNxMetaMessage *restrict message, const uint64_t *microSeconds);
+bool ccnxPortal_Send(CCNxPortal *restrict portal, const CCNxMetaMessage *restrict message, const CCNxStackTimeout *timeout);
 
 /**
- * Read data from the transport stack and construct a {@link CCNxMetaMessage}.
+ * Read data from the protocol stack and construct a {@link CCNxMetaMessage}.
  *
  * The portal message may be an Interest, Content Object, or Control Message.
  * The exact type wrapped by the portal message may be determined via
@@ -313,24 +350,22 @@ bool ccnxPortal_Send(CCNxPortal *restrict portal, const CCNxMetaMessage *restric
  * {@link ccnxMetaMessage_IsControl}. This enables a seamless API for both
  * both producer and consumer applications.
  *
- * Each invocation must include timeout specification which may be:
- * `CCNxStackTimeout_Never`, the call blocks indefinitely,
- * `CCNxStackTimeout_Immediate`, the call returns immediately
- * or a pointer to a unsigned long long containing the number of microseconds to wait for input data.
+ * An invocation of the function will wait for the time specified by the pointer to the `CCNxStackTimeout` value,
+ * or the function will potentially wait forever if the value is `CCNxStackTimeout_Never`.
  *
  * If NULL is returned, the caller may test the value of `errno` to discriminate the conditions.
  *
  * @param [in,out] portal A pointer to a `CCNxPortal` instance.
+ * @param [in] timeout A pointer to a `CCNxStackTimeout` value, or `CCNxStackTimeout_Never`.
  *
  * @return CCNxMetaMessage A `CCNxMetaMessage` instance that must be freed via {@link ccnxMetaMessage_Release}.
- * @return NULL An error occurred while reading from the transport stack (see `ccnxPortal_GetError`).
+ * @return NULL An error occurred while reading from the protocol stack (see `ccnxPortal_GetError`).
  *
  *
  * Example:
  * @code
  * {
- *     CCNxPortal *portal =
- *         ccnxPortalFactory_CreatePortal(factory, ccnxPortalRTA_LoopBack);
+ *     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(factory, ccnxPortalRTA_LoopBack);
  *
  *     CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
  *     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
@@ -358,7 +393,7 @@ bool ccnxPortal_Send(CCNxPortal *restrict portal, const CCNxMetaMessage *restric
  * @see `ccnxMetaMessage_IsContentObject`
  * @see `ccnxMetaMessage_IsControl`
  */
-CCNxMetaMessage *ccnxPortal_Receive(CCNxPortal *portal, const uint64_t *microSeconds);
+CCNxMetaMessage *ccnxPortal_Receive(CCNxPortal *portal, const CCNxStackTimeout *timeout);
 
 /**
  * Get the {@link PARCKeyId} of the identity bound to the given `CCNxPortal` instance.
@@ -488,9 +523,12 @@ bool ccnxPortal_IsError(const CCNxPortal *portal);
 int ccnxPortal_GetError(const CCNxPortal *portal);
 
 /**
- * Flush the input and output paths and pause the transport stack.
+ * Flush the input and output paths and pause the protocol stack.
+ *
+ * The timeout value is currently not used, instead this function will block until the operation is complete.
  *
  * @param [in] portal A pointer to a valid instance of `CCNxPortal`.
+ * @param [in] timeout A pointer to a `CCNxStackTimeout` value, or `CCNxStackTimeout_Never`.
  *
  * @return `true` If successful.
  *
@@ -499,6 +537,6 @@ int ccnxPortal_GetError(const CCNxPortal *portal);
  * <#example#>
  * @endcode
  */
-bool ccnxPortal_Flush(CCNxPortal *portal, const uint64_t *microSeconds);
+bool ccnxPortal_Flush(CCNxPortal *portal, const CCNxStackTimeout *timeout);
 
 #endif  // CCNx_Portal_API_ccnx_Portal_h

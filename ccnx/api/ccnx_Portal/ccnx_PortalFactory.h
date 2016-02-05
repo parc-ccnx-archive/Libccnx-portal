@@ -45,6 +45,7 @@ typedef struct CCNxPortalFactory CCNxPortalFactory;
 #include <parc/security/parc_Identity.h>
 #include <parc/security/parc_KeyId.h>
 
+#include <ccnx/transport/common/transport.h>
 #include <ccnx/transport/common/transport_MetaMessage.h>
 #include <ccnx/api/ccnx_Portal/ccnx_Portal.h>
 

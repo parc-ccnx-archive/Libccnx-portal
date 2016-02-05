@@ -55,8 +55,6 @@ set(CCNX_LINK_LIBRARIES
   ${LIBPARC_LIBRARIES}
   )
 
-
-
 macro(AddTest testFile)
   add_executable(${ARGV0} ${ARGV0}.c)
   target_link_libraries(${ARGV0} ${CCNX_LINK_LIBRARIES})
@@ -69,3 +67,4 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
 endif()
 
 add_subdirectory(ccnx/api/ccnx_Portal)
+add_subdirectory(documentation)

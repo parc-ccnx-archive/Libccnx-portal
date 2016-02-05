@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC)
+ * Copyright (c) 2014-2016, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@
  */
 /**
  * @author Glenn Scott, Palo Alto Research Center (Xerox PARC)
- * @copyright 2014-2015, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC).  All rights reserved.
+ * @copyright 2014-2016, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC).  All rights reserved.
  */
 #include <config.h>
 
@@ -102,7 +102,7 @@ _ccnxPortal_SetAnchor(CCNxPortal *portal, const CCNxName *name, time_t secondsTo
 }
 
 bool
-ccnxPortal_Flush(CCNxPortal *portal, const uint64_t *microSeconds)
+ccnxPortal_Flush(CCNxPortal *portal, const CCNxStackTimeout *timeout)
 {
     CCNxControl *control = ccnxControl_CreateFlushRequest();
 
@@ -197,7 +197,7 @@ ccnxPortal_GetFileId(const CCNxPortal *portal)
 }
 
 bool
-ccnxPortal_Listen(CCNxPortal *restrict portal, const CCNxName *restrict name, const time_t secondsToLive, uint64_t *microSeconds)
+ccnxPortal_Listen(CCNxPortal *restrict portal, const CCNxName *restrict name, const time_t secondsToLive, const CCNxStackTimeout *microSeconds)
 {
     bool result = ccnxPortalStack_Listen(portal->stack, name, microSeconds);
 
@@ -211,7 +211,7 @@ ccnxPortal_Listen(CCNxPortal *restrict portal, const CCNxName *restrict name, co
 }
 
 bool
-ccnxPortal_Ignore(CCNxPortal *portal, const CCNxName *name, const uint64_t *microSeconds)
+ccnxPortal_Ignore(CCNxPortal *portal, const CCNxName *name, const CCNxStackTimeout *microSeconds)
 {
     bool result = ccnxPortalStack_Ignore(portal->stack, name, microSeconds);
 
@@ -221,18 +221,18 @@ ccnxPortal_Ignore(CCNxPortal *portal, const CCNxName *name, const uint64_t *micr
 }
 
 bool
-ccnxPortal_Send(CCNxPortal *restrict portal, const CCNxMetaMessage *restrict message, const uint64_t *microSeconds)
+ccnxPortal_Send(CCNxPortal *restrict portal, const CCNxMetaMessage *restrict message, const CCNxStackTimeout *timeout)
 {
-    bool result = ccnxPortalStack_Send(portal->stack, message, microSeconds);
+    bool result = ccnxPortalStack_Send(portal->stack, message, timeout);
 
     portal->status.error = result ? 0 : ccnxPortalStack_GetErrorCode(portal->stack);
     return result;
 }
 
 CCNxMetaMessage *
-ccnxPortal_Receive(CCNxPortal *portal, const uint64_t *microSeconds)
+ccnxPortal_Receive(CCNxPortal *portal, const CCNxStackTimeout *timeout)
 {
-    CCNxMetaMessage *result = ccnxPortalStack_Receive(portal->stack, microSeconds);
+    CCNxMetaMessage *result = ccnxPortalStack_Receive(portal->stack, timeout);
 
     // This modal operation of Portal is awkward.
     // Messages are interest = content-object, while Chunked is interest = {content-object_1, content-object_2, ...}

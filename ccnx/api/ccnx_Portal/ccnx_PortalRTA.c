@@ -237,7 +237,7 @@ _ccnxPortalRTA_Stop(void *privateData)
 }
 
 static bool
-_ccnxPortalRTA_Send(void *privateData, const CCNxMetaMessage *portalMessage, const uint64_t *microSeconds)
+_ccnxPortalRTA_Send(void *privateData, const CCNxMetaMessage *portalMessage, const CCNxStackTimeout *microSeconds)
 {
     const _CCNxPortalRTAContext *transportContext = (_CCNxPortalRTAContext *) privateData;
 
@@ -247,7 +247,7 @@ _ccnxPortalRTA_Send(void *privateData, const CCNxMetaMessage *portalMessage, con
 }
 
 static CCNxMetaMessage *
-_ccnxPortalRTA_Receive(void *privateData, const uint64_t *microSeconds)
+_ccnxPortalRTA_Receive(void *privateData, const CCNxStackTimeout *microSeconds)
 {
     const _CCNxPortalRTAContext *transportContext = (_CCNxPortalRTAContext *) privateData;
 
@@ -301,7 +301,7 @@ _ccnxPortalRTA_SetAttributes(void *privateData, const CCNxPortalAttributes *attr
 }
 
 static bool
-_ccnxPortalRTA_Listen(void *privateData, const CCNxName *name, const uint64_t *microSeconds)
+_ccnxPortalRTA_Listen(void *privateData, const CCNxName *name, const CCNxStackTimeout *microSeconds)
 {
     CCNxControl *control = ccnxControl_CreateAddRouteToSelfRequest(name);
 
@@ -331,7 +331,7 @@ _ccnxPortalRTA_Listen(void *privateData, const CCNxName *name, const uint64_t *m
 }
 
 static bool
-_ccnxPortalRTA_Ignore(void *privateData, const CCNxName *name, const uint64_t *microSeconds)
+_ccnxPortalRTA_Ignore(void *privateData, const CCNxName *name, const CCNxStackTimeout *microSeconds)
 {
     CCNxControl *control = ccnxControl_CreateRemoveRouteToSelfRequest(name);
 

@@ -26,9 +26,7 @@
  */
 /**
  * @file ccnx_PortalAnchor.h
- * @brief <#Brief Description#>
- *
- * <#Detailed Description#>
+ * @brief CCN Routing control for CCNxPortal
  *
  * @author Glenn Scott, Palo Alto Research Center (Xerox PARC)
  * @copyright 2015, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC).  All rights reserved.
@@ -84,7 +82,7 @@ CCNxPortalAnchor *ccnxPortalAnchor_Acquire(const CCNxPortalAnchor *instance);
  * Example:
  * @code
  * {
- *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create();
+ *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create(name, expireTime);
  *
  *     ccnxPortalAnchor_AssertValid(a);
  *
@@ -99,15 +97,13 @@ void ccnxPortalAnchor_AssertValid(const CCNxPortalAnchor *instance);
 /**
  * Create an instance of CCNxPortalAnchor
  *
- * <#Paragraphs Of Explanation#>
- *
  * @return non-NULL A pointer to a valid CCNxPortalAnchor instance.
  * @return NULL An error occurred.
  *
  * Example:
  * @code
  * {
- *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create();
+ *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create(name, expireTime);
  *
  *     ccnxPortalAnchor_Release(&a);
  * }
@@ -115,7 +111,12 @@ void ccnxPortalAnchor_AssertValid(const CCNxPortalAnchor *instance);
  */
 CCNxPortalAnchor *ccnxPortalAnchor_Create(const CCNxName *name, time_t expireTime);
 
-
+/**
+ * Create an instance of `CCNxPortalAnchor` from an instance of `PARCJSON`.
+ *
+ * @return non-NULL A pointer to a valid CCNxPortalAnchor instance.
+ * @return NULL An error occurred.
+ */
 CCNxPortalAnchor *ccnxPortalAnchor_CreateFromJSON(const PARCJSON *json);
 
 /**
@@ -134,8 +135,8 @@ CCNxPortalAnchor *ccnxPortalAnchor_CreateFromJSON(const PARCJSON *json);
  * Example:
  * @code
  * {
- *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create();
- *     CCNxPortalAnchor *b = ccnxPortalAnchor_Create();
+ *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create(name, expireTime);
+ *     CCNxPortalAnchor *b = ccnxPortalAnchor_Create(name, expireTime);
  *
  *     if (ccnxPortalAnchor_Compare(a, b) == 0) {
  *         printf("Instances are equal.\n");
@@ -163,7 +164,7 @@ int ccnxPortalAnchor_Compare(const CCNxPortalAnchor *instance, const CCNxPortalA
  * Example:
  * @code
  * {
- *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create();
+ *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create(name, expireTime);
  *
  *     CCNxPortalAnchor *copy = ccnxPortalAnchor_Copy(&b);
  *
@@ -183,7 +184,7 @@ CCNxPortalAnchor *ccnxPortalAnchor_Copy(const CCNxPortalAnchor *original);
  * Example:
  * @code
  * {
- *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create();
+ *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create(name, expireTime);
  *
  *     ccnxPortalAnchor_Display(a, 0);
  *
@@ -220,8 +221,8 @@ void ccnxPortalAnchor_Display(const CCNxPortalAnchor *instance, int indentation)
  * Example:
  * @code
  * {
- *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create();
- *     CCNxPortalAnchor *b = ccnxPortalAnchor_Create();
+ *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create(name, expireTime);
+ *     CCNxPortalAnchor *b = ccnxPortalAnchor_Create(name, expireTime);
  *
  *     if (ccnxPortalAnchor_Equals(a, b)) {
  *         printf("Instances are equal.\n");
@@ -260,7 +261,7 @@ bool ccnxPortalAnchor_Equals(const CCNxPortalAnchor *x, const CCNxPortalAnchor *
  * Example:
  * @code
  * {
- *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create();
+ *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create(name, expireTime);
  *
  *     PARCHashCode hashValue = ccnxPortalAnchor_HashCode(buffer);
  *     ccnxPortalAnchor_Release(&a);
@@ -283,7 +284,7 @@ PARCHashCode ccnxPortalAnchor_HashCode(const CCNxPortalAnchor *instance);
  * Example:
  * @code
  * {
- *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create();
+ *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create(name, expireTime);
  *
  *     if (ccnxPortalAnchor_IsValid(a)) {
  *         printf("Instance is valid.\n");
@@ -311,7 +312,7 @@ bool ccnxPortalAnchor_IsValid(const CCNxPortalAnchor *instance);
  * Example:
  * @code
  * {
- *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create();
+ *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create(name, expireTime);
  *
  *     ccnxPortalAnchor_Release(&a);
  * }
@@ -330,7 +331,7 @@ void ccnxPortalAnchor_Release(CCNxPortalAnchor **instancePtr);
  * Example:
  * @code
  * {
- *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create();
+ *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create(name, expireTime);
  *
  *     PARCJSON *json = ccnxPortalAnchor_ToJSON(a);
  *
@@ -356,7 +357,7 @@ PARCJSON *ccnxPortalAnchor_ToJSON(const CCNxPortalAnchor *instance);
  * Example:
  * @code
  * {
- *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create();
+ *     CCNxPortalAnchor *a = ccnxPortalAnchor_Create(name, expireTime);
  *
  *     char *string = ccnxPortalAnchor_ToString(a);
  *
@@ -370,13 +371,37 @@ PARCJSON *ccnxPortalAnchor_ToJSON(const CCNxPortalAnchor *instance);
  */
 char *ccnxPortalAnchor_ToString(const CCNxPortalAnchor *instance);
 
+/**
+ * Append a representation of the specified `CCNxPortalAnchor` instance to the given `PARCBufferComposer`.
+ *
+ * @param [in] name A pointer to a `CCNxPortalAnchor` instance whose representation should be appended to the @p composer.
+ * @param [in,out] composer A pointer to a `PARCBufferComposer` instance to be modified.
+ *
+ * @return NULL Cannot allocate memory.
+ * @return non-NULL The @p composer.
+ *
+ * Example:
+ * @code
+ * {
+ *     PARCBufferComposer *result = parcBufferComposer_Create(name, expireTime);
+ *
+ *     ccnxPortalAnchor_BuildString(anchor, result);
+ *
+ *     char *string = parcBufferComposer_ToString(result);
+ *     printf("Hello: %s\n", string);
+ *     parcMemory_Deallocate(string);
+ *
+ *     parcBufferComposer_Release(&result);
+ * }
+ * @endcode
+ */
 PARCBufferComposer *ccnxPortalAnchor_BuildString(const CCNxPortalAnchor *anchor, PARCBufferComposer *composer);
 
 CCNxPortalAnchor *ccnxPortalAnchor_Deserialize(PARCBuffer *buffer);
 
-PARCBufferComposer *ccnxPortalAnchor_Serialize(const CCNxPortalAnchor *namePrefix, PARCBufferComposer *composer);
+PARCBufferComposer *ccnxPortalAnchor_Serialize(const CCNxPortalAnchor *anchor, PARCBufferComposer *composer);
 
-CCNxName *ccnxPortalAnchor_GetNamePrefix(const CCNxPortalAnchor *namePrefix);
+CCNxName *ccnxPortalAnchor_GetNamePrefix(const CCNxPortalAnchor *anchor);
 
 time_t ccnxPortalAnchor_GetExpireTime(const CCNxPortalAnchor *anchor);
 

@@ -28,22 +28,38 @@
  * @file ccnx_Portal.h
  * @brief A low-level API for CCN Interests, Content Objects, and Control messages.
  *
+ * \mainpage CCNxPortal
+ *  CCNxPortal is a low-level API providing direct access to individual CCNxInterest and CCNxContentObject messages.
+ * The API provides very basic access to the "registration" operations for applications to receive CCNxInterest messages and
+ * facilities for using different, pre-configured protocol stacks.
+ *
  * An application may have many `CCNxPortal` instances, each instance representing a particular protocol stack configuration.
  * Normally an application uses a `CCNxPortalFactory`to create instances rather than creating `CCNxPortal` instances directly.
- * This permits a factory to be setup to provide common attributes and configuration parameters shared by multiple `CCNxPortal` instances.
+ * This permits a factory to be setup to provide common attributes and configuration parameters shared by multiple `CCNxPortal`
+ * instances.
  *
  * The input/output functions, whether direct like `ccnxPortal_Send` and `ccnxPortal_Receive`,
  * in indirect (such as `ccnxPortal_Listen`), take a parameter that specifiess a timeout behaviour for the function.
  * As a result, an application may use the functions as blocking or non-blocking I/O as needed without having to use
  * multiple `CCNxPortal` instances with different blocking or non-blocking behaviour.
  *
- * Specifying the timeout behaviour is simply providing a pointer to a `CCNxStackTimeout` value, or the value `CCNxStackTimeout_Never`.
- * A non-zero timeout specifies the number of time units to wait for the operation to complete.
- * If the timeout specifies 0 units of time, (`CCNxStackTimeout_Never`) the function returns immediately.
- * In the case of ccnxPortal_Receive, 0 units of time, (`CCNxStackTimeout_Never`),
- * causes the function to return the next CCNxMessage if one is ready to be received.
- * In the case of ccnxPortal_Send, 0 units of time, (`CCNxStackTimeout_Never`),
- * causes the function to enqueue the message on the outbound queue if it can be done without waiting.
+ * Specifying the timeout behaviour consists of providing a pointer to a `CCNxStackTimeout` value,
+ * or the value `CCNxStackTimeout_Never`.
+ *
+ * * `CCNxStackTimeout_Immediate`:
+ * The function returns immediately,
+ * after first attempting to perform its function provided it can complete without any blocking.
+ * For example `ccnxPortal_Receive` will return either the next `CCNxMetaMessage`,
+ * if one is waiting, or NULL indicating no message was available.
+ * The function `ccnxPortal_Send` will return after first attempting to enqueue its message on the output message queue.
+ * If the function would have to wait for space on the output message queue, then it returns indicating failure.
+ *
+ * * `CCNxStackTimeout_Microseconds()`:
+ * Functions will perform their operations blocking only for the maximum time
+ * specified.
+ *
+ * *  `CCNxStackTimeout_Never`:
+ * Functions will perform their operations potentially blocking forever.
  *
  * @author Glenn Scott, Palo Alto Research Center (Xerox PARC)
  * @copyright 2014-2016, Xerox Corporation (Xerox)and Palo Alto Research Center (PARC).  All rights reserved.

@@ -42,7 +42,7 @@
 #include <parc/testing/parc_ObjectTesting.h>
 #include <parc/testing/parc_MemoryTesting.h>
 
-#include <parc/developer/parc_Timer.h>
+#include <parc/developer/parc_Stopwatch.h>
 
 #include <ccnx/transport/test_tools/bent_pipe.h>
 
@@ -718,9 +718,9 @@ parcEWMA_GetValue(const PARCEWMA *ewma)
 static uint64_t
 sendx(CCNxPortal *portalOut, uint32_t index, const CCNxName *name)
 {
-    PARCTimer *timer = parcTimer_Create();
+    PARCStopwatch *timer = parcStopwatch_Create();
 
-    parcTimer_Start(timer);
+    parcStopwatch_Start(timer);
     
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     
@@ -743,10 +743,10 @@ sendx(CCNxPortal *portalOut, uint32_t index, const CCNxName *name)
     ccnxMetaMessage_Release(&interestMessage);
     ccnxInterest_Release(&interest);
     
-    parcTimer_Stop(timer);
+    parcStopwatch_Stop(timer);
 
-    uint64_t result =  parcTimer_ElapsedTime(timer);
-    parcTimer_Release(&timer);
+    uint64_t result =  parcStopwatch_ElapsedTime(timer);
+    parcStopwatch_Release(&timer);
     return result;
 }
 
@@ -782,13 +782,13 @@ receiver(void *data)
     PARCEWMA *ewma = parcEWMA_Create(0.75);
     PARCEWMA *roundTrip = parcEWMA_Create(0.75);
     
-    PARCTimer *timer = parcTimer_Create();
+    PARCStopwatch *timer = parcStopwatch_Create();
     do {
         struct timeval tv;
         gettimeofday(&tv, 0);
         uint64_t theTime = tv.tv_sec * 1000000 + tv.tv_usec;
         
-        parcTimer_Start(timer);
+        parcStopwatch_Start(timer);
         CCNxMetaMessage *message = ccnxPortal_Receive(portalIn, CCNxStackTimeout_Never);
         
         PARCBuffer *payload = ccnxInterest_GetPayload(ccnxMetaMessage_GetInterest(message));
@@ -797,8 +797,8 @@ receiver(void *data)
 
         parcEWMA_Update(roundTrip, theTime - parcBuffer_GetUint64(payload));
         
-        parcTimer_Stop(timer);
-        parcEWMA_Update(ewma, parcTimer_ElapsedTime(timer));
+        parcStopwatch_Stop(timer);
+        parcEWMA_Update(ewma, parcStopwatch_ElapsedTime(timer));
         
         ccnxMetaMessage_Release(&message);
         
@@ -806,7 +806,7 @@ receiver(void *data)
     
     printf("receiver %9" PRId64 " us/message %9" PRId64 " us\n", parcEWMA_GetValue(ewma), parcEWMA_GetValue(roundTrip));
     
-    parcTimer_Release(&timer);
+    parcStopwatch_Release(&timer);
     parcEWMW_Destroy(&roundTrip);
     parcEWMW_Destroy(&ewma);
     

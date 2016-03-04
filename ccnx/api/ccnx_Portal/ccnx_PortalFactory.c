@@ -90,7 +90,7 @@ ccnxPortalFactory_Create(const PARCIdentity *identity)
     CCNxPortalFactory *result = parcObject_CreateInstance(CCNxPortalFactory);
     if (result != NULL) {
         result->identity = parcIdentity_Acquire(identity);
-        result->signer = parcIdentity_GetSigner(identity);
+        result->signer = parcIdentity_CreateSigner(identity);
         result->keyId = parcSigner_CreateKeyId(result->signer);
         result->properties = parcProperties_Create();
 

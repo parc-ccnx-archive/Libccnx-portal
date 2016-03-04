@@ -47,7 +47,7 @@
 
 #include <ccnx/transport/test_tools/bent_pipe.h>
 
-#include <parc/security/parc_PublicKeySignerPkcs12Store.h>
+#include <parc/security/parc_Pkcs12KeyStore.h>
 
 LONGBOW_TEST_RUNNER(test_ccnx_PortalFactory /*, .requires="FeatureLongBowSubProcess"*/)
 {
@@ -100,8 +100,8 @@ LONGBOW_TEST_CASE(CreateAcquireRelease, ccnxPortalFactory_Create)
     const char *keystoreName = "ccnxPortalFactory_keystore";
 
     parcSecurity_Init();
-    bool success = parcPublicKeySignerPkcs12Store_CreateFile(keystoreName, "keystore_password", "consumer", 1024, 30);
-    assertTrue(success, "parcPublicKeySignerPkcs12Store_CreateFile('%s', 'keystore_password') failed.", keystoreName);
+    bool success = parcPkcs12KeyStore_CreateFile(keystoreName, "keystore_password", "consumer", 1024, 30);
+    assertTrue(success, "parcPkcs12KeyStore_CreateFile('%s', 'keystore_password') failed.", keystoreName);
 
     PARCIdentityFile *identityFile = parcIdentityFile_Create(keystoreName, "keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
@@ -119,8 +119,8 @@ LONGBOW_TEST_CASE(CreateAcquireRelease, ccnxPortalFactory_AcquireRelease)
     const char *keystoreName = "ccnxPortalFactory_keystore";
 
     parcSecurity_Init();
-    bool success = parcPublicKeySignerPkcs12Store_CreateFile(keystoreName, "keystore_password", "consumer", 1024, 30);
-    assertTrue(success, "parcPublicKeySignerPkcs12Store_CreateFile('%s', 'keystore_password') failed.", keystoreName);
+    bool success = parcPkcs12KeyStore_CreateFile(keystoreName, "keystore_password", "consumer", 1024, 30);
+    assertTrue(success, "parcPkcs12KeyStore_CreateFile('%s', 'keystore_password') failed.", keystoreName);
 
     PARCIdentityFile *identityFile = parcIdentityFile_Create(keystoreName, "keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
@@ -166,8 +166,8 @@ LONGBOW_TEST_CASE(Global, ccnxPortalFactory_GetIdentity)
     const char *keystoreName = "ccnxPortalFactory_keystore";
 
     parcSecurity_Init();
-    bool success = parcPublicKeySignerPkcs12Store_CreateFile(keystoreName, "keystore_password", "consumer", 1024, 30);
-    assertTrue(success, "parcPublicKeySignerPkcs12Store_CreateFile('%s', 'keystore_password') failed.", keystoreName);
+    bool success = parcPkcs12KeyStore_CreateFile(keystoreName, "keystore_password", "consumer", 1024, 30);
+    assertTrue(success, "parcPkcs12KeyStore_CreateFile('%s', 'keystore_password') failed.", keystoreName);
 
     PARCIdentityFile *identityFile = parcIdentityFile_Create(keystoreName, "keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
@@ -190,8 +190,8 @@ LONGBOW_TEST_CASE(Global, ccnxPortalFactory_GetKeyId)
     const char *keystoreName = "ccnxPortalFactory_keystore";
 
     parcSecurity_Init();
-    bool success = parcPublicKeySignerPkcs12Store_CreateFile(keystoreName, "keystore_password", "consumer", 1024, 30);
-    assertTrue(success, "parcPublicKeySignerPkcs12Store_CreateFile('%s', 'keystore_password') failed.", keystoreName);
+    bool success = parcPkcs12KeyStore_CreateFile(keystoreName, "keystore_password", "consumer", 1024, 30);
+    assertTrue(success, "parcPkcs12KeyStore_CreateFile('%s', 'keystore_password') failed.", keystoreName);
 
     PARCIdentityFile *identityFile = parcIdentityFile_Create(keystoreName, "keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
@@ -201,7 +201,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortalFactory_GetKeyId)
 
     const PARCKeyId *actual = ccnxPortalFactory_GetKeyId(factory);
 
-    PARCSigner *signer = parcIdentity_GetSigner(identity);
+    PARCSigner *signer = parcIdentity_CreateSigner(identity);
     PARCKeyId *expected = parcSigner_CreateKeyId(signer);
     parcSigner_Release(&signer);
 

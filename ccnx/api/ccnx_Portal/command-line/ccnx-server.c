@@ -45,7 +45,7 @@
 #include <parc/algol/parc_BufferComposer.h>
 #include <parc/algol/parc_Memory.h>
 #include <parc/security/parc_Security.h>
-#include <parc/security/parc_PublicKeySignerPkcs12Store.h>
+#include <parc/security/parc_PublicKeySigner.h>
 #include <parc/security/parc_IdentityFile.h>
 
 #include <ccnx/common/ccnx_Name.h>

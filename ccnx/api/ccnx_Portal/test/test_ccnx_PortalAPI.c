@@ -86,7 +86,6 @@ LONGBOW_TEST_FIXTURE_SETUP(Global)
 
     PARCIdentityFile *identityFile = parcIdentityFile_Create("my_keystore", "my_keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
-    parcIdentityFile_Release(&identityFile);
 
     CCNxPortalFactory *factory = ccnxPortalFactory_Create(identity);
     parcIdentity_Release(&identity);
@@ -100,6 +99,7 @@ LONGBOW_TEST_FIXTURE_TEARDOWN(Global)
 {
     CCNxPortalFactory *factory = longBowTestCase_GetClipBoardData(testCase);
     ccnxPortalFactory_Release(&factory);
+
     parcSecurity_Fini();
 
     if (parcMemory_Outstanding() != InitialMemoryOutstanding) {

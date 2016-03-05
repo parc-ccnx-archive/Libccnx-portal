@@ -100,17 +100,18 @@ LONGBOW_TEST_CASE(CreateAcquireRelease, ccnxPortalFactory_Create)
     const char *keystoreName = "ccnxPortalFactory_keystore";
 
     parcSecurity_Init();
+
     bool success = parcPkcs12KeyStore_CreateFile(keystoreName, "keystore_password", "consumer", 1024, 30);
     assertTrue(success, "parcPkcs12KeyStore_CreateFile('%s', 'keystore_password') failed.", keystoreName);
 
     PARCIdentityFile *identityFile = parcIdentityFile_Create(keystoreName, "keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
-    parcIdentityFile_Release(&identityFile);
 
     CCNxPortalFactory *factory = ccnxPortalFactory_Create(identity);
     parcIdentity_Release(&identity);
 
     ccnxPortalFactory_Release(&factory);
+
     parcSecurity_Fini();
 }
 
@@ -119,12 +120,12 @@ LONGBOW_TEST_CASE(CreateAcquireRelease, ccnxPortalFactory_AcquireRelease)
     const char *keystoreName = "ccnxPortalFactory_keystore";
 
     parcSecurity_Init();
+
     bool success = parcPkcs12KeyStore_CreateFile(keystoreName, "keystore_password", "consumer", 1024, 30);
     assertTrue(success, "parcPkcs12KeyStore_CreateFile('%s', 'keystore_password') failed.", keystoreName);
 
     PARCIdentityFile *identityFile = parcIdentityFile_Create(keystoreName, "keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
-    parcIdentityFile_Release(&identityFile);
 
     CCNxPortalFactory *factory = ccnxPortalFactory_Create(identity);
     parcIdentity_Release(&identity);
@@ -171,7 +172,6 @@ LONGBOW_TEST_CASE(Global, ccnxPortalFactory_GetIdentity)
 
     PARCIdentityFile *identityFile = parcIdentityFile_Create(keystoreName, "keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
-    parcIdentityFile_Release(&identityFile);
 
     CCNxPortalFactory *factory = ccnxPortalFactory_Create(identity);
 
@@ -195,7 +195,6 @@ LONGBOW_TEST_CASE(Global, ccnxPortalFactory_GetKeyId)
 
     PARCIdentityFile *identityFile = parcIdentityFile_Create(keystoreName, "keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
-    parcIdentityFile_Release(&identityFile);
 
     CCNxPortalFactory *factory = ccnxPortalFactory_Create(identity);
 

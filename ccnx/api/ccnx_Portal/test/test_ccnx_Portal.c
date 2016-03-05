@@ -144,7 +144,6 @@ LONGBOW_TEST_FIXTURE_SETUP(Global)
 
     PARCIdentityFile *identityFile = parcIdentityFile_Create("my_keystore", "my_keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
-    parcIdentityFile_Release(&identityFile);
 
     data->factory = ccnxPortalFactory_Create(identity);
     parcIdentity_Release(&identity);
@@ -621,7 +620,6 @@ LONGBOW_TEST_FIXTURE_SETUP(Performance)
 
     PARCIdentityFile *identityFile = parcIdentityFile_Create("my_keystore", "my_keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
-    parcIdentityFile_Release(&identityFile);
 
     data->factory = ccnxPortalFactory_Create(identity);
     parcIdentity_Release(&identity);

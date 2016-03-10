@@ -25,8 +25,10 @@ set(CCNX_API_PORTAL_SOURCE_FILES
 	ccnxPortal_About.c
 	)
 
+source_group(Sources FILES ${CCNX_API_PORTAL_SOURCE_FILES})
+source_group(Sources FILES ${CCNX_API_PORTAL_HEADERS})
 
-add_library(ccnx_api_portal         STATIC ${CCNX_API_PORTAL_SOURCE_FILES})
+add_library(ccnx_api_portal         STATIC ${CCNX_API_PORTAL_SOURCE_FILES} ${CCNX_API_PORTAL_HEADER_FILES})
 add_library(ccnx_api_portal.shared  SHARED ${CCNX_API_PORTAL_SOURCE_FILES})
 set_target_properties(ccnx_api_portal.shared PROPERTIES 
   C_STANDARD 99

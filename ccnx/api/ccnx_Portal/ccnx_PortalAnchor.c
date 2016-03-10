@@ -98,7 +98,7 @@ ccnxPortalAnchor_CreateFromJSON(const PARCJSON *json)
     CCNxPortalAnchor *result = parcObject_CreateInstance(CCNxPortalAnchor);
 
     if (result != NULL) {
-        result->prefix = ccnxName_CreateFromURI(parcBuffer_Overlay(parcJSONValue_GetString(parcJSON_GetByPath(json, "/namePrefix")), 0));
+        result->prefix = ccnxName_CreateFromCString(parcBuffer_Overlay(parcJSONValue_GetString(parcJSON_GetByPath(json, "/namePrefix")), 0));
         result->expireTime = parcJSONValue_GetInteger(parcJSON_GetByPath(json, "/expireTime"));
 
        ccnxPortalAnchor_OptionalAssertValid(result);

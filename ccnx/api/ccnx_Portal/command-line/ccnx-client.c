@@ -161,7 +161,7 @@ main(int argc, char *argv[argc])
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
     parcIdentityFile_Release(&identityFile);
 
-    CCNxName *name = ccnxName_CreateFromURI(objectName);
+    CCNxName *name = ccnxName_CreateFromCString(objectName);
 
     int result = ccnGet(identity, name);
 

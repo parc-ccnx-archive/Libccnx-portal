@@ -206,7 +206,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Send)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -228,7 +228,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_GetStatus)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -253,7 +253,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_GetError)
     
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
     
@@ -278,7 +278,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_GetFileId)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -298,7 +298,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_IsEOF)
     TestData *data = longBowTestCase_GetClipBoardData(testCase);
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -323,7 +323,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_IsError)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -348,7 +348,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Listen)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     bool actual = ccnxPortal_Listen(portal, name, 60, CCNxStackTimeout_Never);
     
     ccnxName_Release(&name);
@@ -364,7 +364,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Ignore)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     bool actual = ccnxPortal_Ignore(portal, name, CCNxStackTimeout_Never);
     ccnxName_Release(&name);
 
@@ -394,7 +394,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Send_NeverTimeout)
     CCNxPortal *portalOut = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
     CCNxPortal *portalIn = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
     
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
     
@@ -418,7 +418,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Send_ImmediateTimeout)
     CCNxPortal *portalOut = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
     CCNxPortal *portalIn = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
     
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
     
@@ -441,7 +441,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Send_ImmediateTimeout_WouldBlock)
     
     CCNxPortal *portalOut = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
     
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
     
@@ -469,7 +469,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Receive_NeverTimeout)
     CCNxPortal *portalOut = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
     CCNxPortal *portalIn = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -503,7 +503,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Receive_ImmediateTimeout)
     CCNxPortal *portalOut = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
     CCNxPortal *portalIn = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
     
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
     
@@ -556,7 +556,7 @@ LONGBOW_TEST_CASE(Global, Hello)
 
     assertNotNull(portal, "Expected a non-null CCNxPortal pointer.");
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
 
     CCNxMetaMessage *interestMessage = ccnxMetaMessage_CreateFromInterest(interest);

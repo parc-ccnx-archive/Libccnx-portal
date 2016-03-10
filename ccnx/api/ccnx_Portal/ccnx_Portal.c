@@ -82,7 +82,7 @@ _ccnxPortal_SetAnchor(CCNxPortal *portal, const CCNxName *name, time_t secondsTo
 {
     int64_t timeOutMicroSeconds = parcProperties_GetAsInteger(ccnxPortalStack_GetProperties(portal->stack), CCNxPortalFactory_LocalRouterTimeout, 1000000);
 
-    CCNxName *routerName = ccnxName_CreateFromURI(ccnxPortalStack_GetProperty(portal->stack, CCNxPortalFactory_LocalRouterName, "lci:/local/dcr"));
+    CCNxName *routerName = ccnxName_CreateFromCString(ccnxPortalStack_GetProperty(portal->stack, CCNxPortalFactory_LocalRouterName, "lci:/local/dcr"));
     CCNxName *fullName = ccnxName_ComposeNAME(routerName, "anchor");
 
     CCNxMetaMessage *message = _ccnxPortal_ComposeAnchorMessage(fullName, name, secondsToLive);

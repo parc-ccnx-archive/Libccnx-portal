@@ -82,7 +82,7 @@ LONGBOW_TEST_FIXTURE_TEARDOWN(CreateAcquireRelease)
 
 LONGBOW_TEST_CASE(CreateAcquireRelease, CreateRelease)
 {
-    CCNxName *name = ccnxName_CreateFromURI("lci:/name");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/name");
     time_t expireTime = 123;
     CCNxPortalAnchor *instance = ccnxPortalAnchor_Create(name, expireTime);
     assertNotNull(instance, "Expected non-null result from ccnxPortalAnchor_Create();");
@@ -129,7 +129,7 @@ LONGBOW_TEST_CASE(Object,  ccnxPortalAnchor_Compare)
 
 LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_Copy)
 {
-    CCNxName *name = ccnxName_CreateFromURI("lci:/name");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/name");
     time_t expireTime = 123;
     CCNxPortalAnchor *instance = ccnxPortalAnchor_Create(name, expireTime);
 
@@ -143,7 +143,7 @@ LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_Copy)
 
 LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_Display)
 {
-    CCNxName *name = ccnxName_CreateFromURI("lci:/name");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/name");
     time_t expireTime = 123;
     CCNxPortalAnchor *instance = ccnxPortalAnchor_Create(name, expireTime);
     ccnxPortalAnchor_Display(instance, 0);
@@ -153,7 +153,7 @@ LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_Display)
 
 LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_Equals)
 {
-    CCNxName *name = ccnxName_CreateFromURI("lci:/name");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/name");
     time_t expireTime = 123;
     CCNxPortalAnchor *x = ccnxPortalAnchor_Create(name, expireTime);
     CCNxPortalAnchor *y = ccnxPortalAnchor_Create(name, expireTime);
@@ -169,7 +169,7 @@ LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_Equals)
 
 LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_HashCode)
 {
-    CCNxName *name = ccnxName_CreateFromURI("lci:/name");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/name");
     time_t expireTime = 123;
     CCNxPortalAnchor *x = ccnxPortalAnchor_Create(name, expireTime);
     CCNxPortalAnchor *y = ccnxPortalAnchor_Create(name, expireTime);
@@ -183,7 +183,7 @@ LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_HashCode)
 
 LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_IsValid)
 {
-    CCNxName *name = ccnxName_CreateFromURI("lci:/name");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/name");
     time_t expireTime = 123;
     CCNxPortalAnchor *instance = ccnxPortalAnchor_Create(name, expireTime);
     assertTrue(ccnxPortalAnchor_IsValid(instance), "Expected ccnxPortalAnchor_Create to result in a valid instance.");
@@ -196,7 +196,7 @@ LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_IsValid)
 
 LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_ToJSON)
 {
-    CCNxName *name = ccnxName_CreateFromURI("lci:/name");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/name");
     time_t expireTime = 123;
     CCNxPortalAnchor *instance = ccnxPortalAnchor_Create(name, expireTime);
 
@@ -210,7 +210,7 @@ LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_ToJSON)
 
 LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_ToString)
 {
-    CCNxName *name = ccnxName_CreateFromURI("lci:/name");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/name");
     time_t expireTime = 123;
     CCNxPortalAnchor *instance = ccnxPortalAnchor_Create(name, expireTime);
 
@@ -225,7 +225,7 @@ LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_ToString)
 
 LONGBOW_TEST_CASE(Object, ccnxPortalAnchor_SerializeDeserialize)
 {
-    CCNxName *name = ccnxName_CreateFromURI("lci:/name");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/name");
     time_t expireTime = 123;
     CCNxPortalAnchor *instance = ccnxPortalAnchor_Create(name, expireTime);
 
@@ -265,7 +265,7 @@ LONGBOW_TEST_FIXTURE_TEARDOWN(Specialization)
 
 LONGBOW_TEST_CASE(Specialization, ccnxPortalAnchor_GetNamePrefix)
 {
-    CCNxName *name = ccnxName_CreateFromURI("lci:/name");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/name");
     time_t expireTime = 123;
     CCNxPortalAnchor *anchor = ccnxPortalAnchor_Create(name, expireTime);
 
@@ -278,7 +278,7 @@ LONGBOW_TEST_CASE(Specialization, ccnxPortalAnchor_GetNamePrefix)
 
 LONGBOW_TEST_CASE(Specialization, ccnxPortalAnchor_GetExpireTime)
 {
-    CCNxName *name = ccnxName_CreateFromURI("lci:/name");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/name");
     time_t expireTime = 123;
     CCNxPortalAnchor *anchor = ccnxPortalAnchor_Create(name, expireTime);
 

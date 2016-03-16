@@ -25,8 +25,10 @@ set(CCNX_API_PORTAL_SOURCE_FILES
 	ccnxPortal_About.c
 	)
 
+source_group(Sources FILES ${CCNX_API_PORTAL_SOURCE_FILES})
+source_group(Sources FILES ${CCNX_API_PORTAL_HEADERS})
 
-add_library(ccnx_api_portal         STATIC ${CCNX_API_PORTAL_SOURCE_FILES})
+add_library(ccnx_api_portal         STATIC ${CCNX_API_PORTAL_SOURCE_FILES} ${CCNX_API_PORTAL_HEADER_FILES})
 add_library(ccnx_api_portal.shared  SHARED ${CCNX_API_PORTAL_SOURCE_FILES})
 set_target_properties(ccnx_api_portal.shared PROPERTIES 
   C_STANDARD 99
@@ -42,7 +44,6 @@ set(libccnx_api_portal_libraries
 foreach(lib ${libccnx_api_portal_libraries})
   install(TARGETS ${lib} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
   set_property(TARGET ${lib} PROPERTY C_STANDARD 99)
-  set_property(TARGET ${lib} PROPERTY INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib")
 endforeach()
 
 install(FILES ${CCNX_API_PORTAL_HEADERS} DESTINATION include/ccnx/api/ccnx_Portal )

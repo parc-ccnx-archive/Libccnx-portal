@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.2)
 project(Libccnx-portal)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
@@ -16,7 +18,6 @@ include( detectCacheSize )
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
 set(CMAKE_C_FLAGS_NOPANTS "${CMAKE_C_FLAGS_NOPANTS} -O3 -DNDEBUG -DLibccnx_Portal_DISABLE_VALIDATION")
 
-link_directories($ENV{CCNX_DEPENDENCIES}/lib)
 include_directories($ENV{CCNX_DEPENDENCIES}/include)
 set(OPENSSL_ROOT_DIR $ENV{CCNX_DEPENDENCIES})
 
@@ -56,10 +57,13 @@ set(CCNX_LINK_LIBRARIES
   ${LIBPARC_LIBRARIES}
   )
 
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+
 macro(AddTest testFile)
   add_executable(${ARGV0} ${ARGV0}.c)
   target_link_libraries(${ARGV0} ${CCNX_LINK_LIBRARIES})
   add_test(${ARGV0} ${ARGV0})
+  set_target_properties(${ARGV0} PROPERTIES FOLDER Test)
 endmacro(AddTest)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")

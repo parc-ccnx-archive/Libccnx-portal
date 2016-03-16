@@ -42,7 +42,7 @@
 #include <parc/testing/parc_ObjectTesting.h>
 #include <parc/testing/parc_MemoryTesting.h>
 
-#include <parc/developer/parc_Timer.h>
+#include <parc/developer/parc_Stopwatch.h>
 
 #include <ccnx/transport/test_tools/bent_pipe.h>
 
@@ -205,7 +205,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Send)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -227,7 +227,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_GetStatus)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -252,7 +252,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_GetError)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -277,7 +277,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_GetFileId)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -297,7 +297,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_IsEOF)
     TestData *data = longBowTestCase_GetClipBoardData(testCase);
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -322,7 +322,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_IsError)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -347,7 +347,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Listen)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     bool actual = ccnxPortal_Listen(portal, name, 60, CCNxStackTimeout_Never);
 
     ccnxName_Release(&name);
@@ -363,7 +363,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Ignore)
 
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     bool actual = ccnxPortal_Ignore(portal, name, CCNxStackTimeout_Never);
     ccnxName_Release(&name);
 
@@ -393,7 +393,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Send_NeverTimeout)
     CCNxPortal *portalOut = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
     CCNxPortal *portalIn = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -417,7 +417,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Send_ImmediateTimeout)
     CCNxPortal *portalOut = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
     CCNxPortal *portalIn = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -440,7 +440,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Send_ImmediateTimeout_WouldBlock)
 
     CCNxPortal *portalOut = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -468,7 +468,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Receive_NeverTimeout)
     CCNxPortal *portalOut = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
     CCNxPortal *portalIn = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -502,7 +502,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortal_Receive_ImmediateTimeout)
     CCNxPortal *portalOut = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
     CCNxPortal *portalIn = ccnxPortalFactory_CreatePortal(data->factory, TEST_STACK);
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
     ccnxName_Release(&name);
 
@@ -555,7 +555,7 @@ LONGBOW_TEST_CASE(Global, Hello)
 
     assertNotNull(portal, "Expected a non-null CCNxPortal pointer.");
 
-    CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
 
     CCNxMetaMessage *interestMessage = ccnxMetaMessage_CreateFromInterest(interest);
@@ -716,9 +716,9 @@ parcEWMA_GetValue(const PARCEWMA *ewma)
 static uint64_t
 sendx(CCNxPortal *portalOut, uint32_t index, const CCNxName *name)
 {
-    PARCTimer *timer = parcTimer_Create();
+    PARCStopwatch *timer = parcStopwatch_Create();
 
-    parcTimer_Start(timer);
+    parcStopwatch_Start(timer);
 
     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
 
@@ -741,10 +741,10 @@ sendx(CCNxPortal *portalOut, uint32_t index, const CCNxName *name)
     ccnxMetaMessage_Release(&interestMessage);
     ccnxInterest_Release(&interest);
 
-    parcTimer_Stop(timer);
+    parcStopwatch_Stop(timer);
 
-    uint64_t result =  parcTimer_ElapsedTime(timer);
-    parcTimer_Release(&timer);
+    uint64_t result =  parcStopwatch_ElapsedTime(timer);
+    parcStopwatch_Release(&timer);
     return result;
 }
 
@@ -780,13 +780,13 @@ receiver(void *data)
     PARCEWMA *ewma = parcEWMA_Create(0.75);
     PARCEWMA *roundTrip = parcEWMA_Create(0.75);
 
-    PARCTimer *timer = parcTimer_Create();
+    PARCStopwatch *timer = parcStopwatch_Create();
     do {
         struct timeval tv;
         gettimeofday(&tv, 0);
         uint64_t theTime = tv.tv_sec * 1000000 + tv.tv_usec;
 
-        parcTimer_Start(timer);
+        parcStopwatch_Start(timer);
         CCNxMetaMessage *message = ccnxPortal_Receive(portalIn, CCNxStackTimeout_Never);
 
         PARCBuffer *payload = ccnxInterest_GetPayload(ccnxMetaMessage_GetInterest(message));
@@ -795,8 +795,8 @@ receiver(void *data)
 
         parcEWMA_Update(roundTrip, theTime - parcBuffer_GetUint64(payload));
 
-        parcTimer_Stop(timer);
-        parcEWMA_Update(ewma, parcTimer_ElapsedTime(timer));
+        parcStopwatch_Stop(timer);
+        parcEWMA_Update(ewma, parcStopwatch_ElapsedTime(timer));
 
         ccnxMetaMessage_Release(&message);
 
@@ -804,7 +804,7 @@ receiver(void *data)
 
     printf("receiver %9" PRId64 " us/message %9" PRId64 " us\n", parcEWMA_GetValue(ewma), parcEWMA_GetValue(roundTrip));
 
-    parcTimer_Release(&timer);
+    parcStopwatch_Release(&timer);
     parcEWMW_Destroy(&roundTrip);
     parcEWMW_Destroy(&ewma);
 

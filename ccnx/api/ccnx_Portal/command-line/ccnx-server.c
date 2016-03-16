@@ -221,7 +221,7 @@ main(int argc, char *argv[argc])
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
     parcIdentityFile_Release(&identityFile);
 
-    CCNxName *name = ccnxName_CreateFromURI(listenName);
+    CCNxName *name = ccnxName_CreateFromCString(listenName);
 
     int result = ccnServe(identity, name, commandString);
 

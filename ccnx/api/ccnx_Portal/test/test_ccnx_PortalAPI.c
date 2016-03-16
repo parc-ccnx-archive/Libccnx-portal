@@ -129,7 +129,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortalAPI_SendReceive)
     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(factory, ccnxPortalAPI_LoopBack);
 
     // Send Hello
-    CCNxName *name1 = ccnxName_CreateFromURI("lci:/Hello/World");
+    CCNxName *name1 = ccnxName_CreateFromCString("lci:/Hello/World");
     CCNxInterest *sentInterest1 = ccnxInterest_CreateSimple(name1);
     ccnxName_Release(&name1);
 
@@ -138,7 +138,7 @@ LONGBOW_TEST_CASE(Global, ccnxPortalAPI_SendReceive)
     ccnxMetaMessage_Release(&message);
 
     // Send Goodbye. We want to make sure these arrive in that order.
-    CCNxName *name2 = ccnxName_CreateFromURI("lci:/Goodbye/World");
+    CCNxName *name2 = ccnxName_CreateFromCString("lci:/Goodbye/World");
     CCNxInterest *sentInterest2 = ccnxInterest_CreateSimple(name2);
     ccnxName_Release(&name2);
 

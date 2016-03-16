@@ -250,7 +250,7 @@ bool ccnxPortal_SetAttributes(CCNxPortal *portal, const CCNxPortalAttributes *at
  * {
  *     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(factory, ccnxPortalRTA_LoopBack);
  *     const char *uri = "lci:/PARC";
- *     CCNxName *name = ccnxName_CreateFromURI(reguri);
+ *     CCNxName *name = ccnxName_CreateFromCString(reguri);
  *
  *     if (ccnxPortal_Listen(portal, name, 600, CCNxStackTimeout_MicroSeconds(5000))) {
  *         ...
@@ -281,7 +281,7 @@ bool ccnxPortal_Listen(CCNxPortal *restrict portal, const CCNxName *restrict nam
  * {
  *     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(factory, ccnxPortalRTA_LoopBack);
  *     const char *uri = "lci:/PARC";
- *     CCNxName *name = ccnxName_CreateFromURI(reguri);
+ *     CCNxName *name = ccnxName_CreateFromCString(reguri);
  *
  *     if (ccnxPortal_Listen(portal, name, 86400, CCNxStackTimeout_Never)) {
  *         ...
@@ -321,7 +321,7 @@ bool ccnxPortal_Ignore(CCNxPortal *portal, const CCNxName *name, const CCNxStack
  * {
  *     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(factory, ccnxPortalRTA_LoopBack);
  *
- *     CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+ *     CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
  *     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
  *
  *     CCNxMetaMessage *message = ccnxMetaMessage_CreateFromInterest(interest);
@@ -367,7 +367,7 @@ bool ccnxPortal_Send(CCNxPortal *restrict portal, const CCNxMetaMessage *restric
  * {
  *     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(factory, ccnxPortalRTA_LoopBack);
  *
- *     CCNxName *name = ccnxName_CreateFromURI("lci:/Hello/World");
+ *     CCNxName *name = ccnxName_CreateFromCString("lci:/Hello/World");
  *     CCNxInterest *interest = ccnxInterest_CreateSimple(name);
  *
  *     CCNxMetaMessage *message = ccnxMetaMessage_CreateFromInterest(interest);
@@ -437,7 +437,7 @@ const PARCKeyId *ccnxPortal_GetKeyId(const CCNxPortal *portal);
  *     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(factory, ccnxPortalRTA_Chunked);
  *
  *     const char *uri = "lci:/PARC";
- *     CCNxName *name = ccnxName_CreateFromURI(reguri);
+ *     CCNxName *name = ccnxName_CreateFromCString(reguri);
  *
  *     if (ccnxPortal_Listen(portal, name, 86400, CCNxStackTimeout_Never)) {
  *         ...
@@ -467,7 +467,7 @@ bool ccnxPortal_IsEOF(const CCNxPortal *portal);
  *     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(factory, ccnxPortalRTA_LoopBack);
  *
  *     const char *uri = "lci:/PARC";
- *     CCNxName *name = ccnxName_CreateFromURI(reguri);
+ *     CCNxName *name = ccnxName_CreateFromCString(reguri);
  *
  *     if (ccnxPortal_Listen(portal, name, 86400, CCNxStackTimeout_Never)) {
  *         ...
@@ -500,7 +500,7 @@ bool ccnxPortal_IsError(const CCNxPortal *portal);
  *     CCNxPortal *portal = ccnxPortalFactory_CreatePortal(factory, ccnxPortalRTA_LoopBack);
  *
  *     const char *uri = "lci:/PARC";
- *     CCNxName *name = ccnxName_CreateFromURI(reguri);
+ *     CCNxName *name = ccnxName_CreateFromCString(reguri);
  *
  *     if (ccnxPortal_Listen(portal, name, 86400, CCNxStackTimeout_Never)) {
  *         ...

@@ -57,6 +57,8 @@ set(CCNX_LINK_LIBRARIES
   ${LIBPARC_LIBRARIES}
   )
 
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+
 macro(AddTest testFile)
   add_executable(${ARGV0} ${ARGV0}.c)
   target_link_libraries(${ARGV0} ${CCNX_LINK_LIBRARIES})

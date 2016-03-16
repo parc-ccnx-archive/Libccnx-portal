@@ -44,7 +44,6 @@ set(libccnx_api_portal_libraries
 foreach(lib ${libccnx_api_portal_libraries})
   install(TARGETS ${lib} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
   set_property(TARGET ${lib} PROPERTY C_STANDARD 99)
-  set_property(TARGET ${lib} PROPERTY INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib")
 endforeach()
 
 install(FILES ${CCNX_API_PORTAL_HEADERS} DESTINATION include/ccnx/api/ccnx_Portal )

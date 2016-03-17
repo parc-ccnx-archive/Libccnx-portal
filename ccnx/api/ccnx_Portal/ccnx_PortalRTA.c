@@ -72,7 +72,7 @@
 #include <ccnx/transport/transport_rta/config/config_Codec_Tlv.h>
 #include <ccnx/transport/transport_rta/config/config_Forwarder_Local.h>
 #include <ccnx/transport/transport_rta/config/config_Forwarder_Metis.h>
-#include <ccnx/transport/transport_rta/config/config_PublicKeySignerPkcs12Store.h>
+#include <ccnx/transport/transport_rta/config/config_PublicKeySigner.h>
 
 static const uint16_t ccnxPortal_MetisPort = 9695;
 
@@ -217,7 +217,7 @@ _createTransportConfig(const CCNxPortalFactory *factory, _CCNxPortalType type, _
 
     const PARCIdentity *identity = ccnxPortalFactory_GetIdentity(factory);
 
-    configPublicKeySignerPkcs12Store_SetIdentity(connConfig, identity);
+    configPublicKeySigner_SetIdentity(connConfig, identity);
 
     CCNxTransportConfig *result = ccnxTransportConfig_Create(stackConfig, connConfig);
 

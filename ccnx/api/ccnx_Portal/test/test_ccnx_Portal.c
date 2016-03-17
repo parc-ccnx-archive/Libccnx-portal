@@ -743,9 +743,7 @@ sendx(CCNxPortal *portalOut, uint32_t index, const CCNxName *name)
     ccnxMetaMessage_Release(&interestMessage);
     ccnxInterest_Release(&interest);
     
-    parcStopwatch_Stop(timer);
-
-    uint64_t result =  parcStopwatch_ElapsedTime(timer);
+    uint64_t result =  parcStopwatch_ElapsedTimeNanos(timer);
     parcStopwatch_Release(&timer);
     return result;
 }
@@ -797,8 +795,7 @@ receiver(void *data)
 
         parcEWMA_Update(roundTrip, theTime - parcBuffer_GetUint64(payload));
         
-        parcStopwatch_Stop(timer);
-        parcEWMA_Update(ewma, parcStopwatch_ElapsedTime(timer));
+        parcEWMA_Update(ewma, parcStopwatch_ElapsedTimeNanos(timer));
         
         ccnxMetaMessage_Release(&message);
         

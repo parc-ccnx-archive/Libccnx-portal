@@ -48,7 +48,7 @@
 
 #include <parc/security/parc_IdentityFile.h>
 #include <parc/security/parc_Security.h>
-#include <parc/security/parc_PublicKeySignerPkcs12Store.h>
+#include <parc/security/parc_Pkcs12KeyStore.h>
 
 //#define USE_APILOOPBACK
 
@@ -138,9 +138,8 @@ LONGBOW_TEST_FIXTURE_SETUP(Global)
 
     parcSecurity_Init();
 
-    bool success =
-        parcPublicKeySignerPkcs12Store_CreateFile("my_keystore", "my_keystore_password", subjectName, keyLength, validityDays);
-    assertTrue(success, "parcPublicKeySignerPkcs12Store_CreateFile('my_keystore', 'my_keystore_password') failed.");
+    bool success = parcPkcs12KeyStore_CreateFile("my_keystore", "my_keystore_password", subjectName, keyLength, validityDays);
+    assertTrue(success, "parcPkcs12KeyStore_CreateFile('my_keystore', 'my_keystore_password') failed.");
 
     PARCIdentityFile *identityFile = parcIdentityFile_Create("my_keystore", "my_keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
@@ -616,8 +615,8 @@ LONGBOW_TEST_FIXTURE_SETUP(Performance)
     
     parcSecurity_Init();
     
-    bool success = parcPublicKeySignerPkcs12Store_CreateFile("my_keystore", "my_keystore_password", subjectName, keyLength, validityDays);
-    assertTrue(success, "parcPublicKeySignerPkcs12Store_CreateFile('my_keystore', 'my_keystore_password') failed.");
+    bool success = parcPkcs12KeyStore_CreateFile("my_keystore", "my_keystore_password", subjectName, keyLength, validityDays);
+    assertTrue(success, "parcPkcs12KeyStore_CreateFile('my_keystore', 'my_keystore_password') failed.");
     
     PARCIdentityFile *identityFile = parcIdentityFile_Create("my_keystore", "my_keystore_password");
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);

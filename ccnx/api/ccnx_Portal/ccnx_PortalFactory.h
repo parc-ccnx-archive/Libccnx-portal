@@ -78,7 +78,7 @@ extern const char *CCNxPortalFactory_LocalRouterTimeout;
  *     char *keystoreName = "keystore";
  *     char *keystorePassword = "password";
  *
- *     bool success = parcPublicKeySignerPkcs12Store_CreateFile(keystoreName, keystorePassword, subjectName, 1024, 30);
+ *     bool success = parcPkcs12KeyStore_CreateFile(keystoreName, keystorePassword, subjectName, 1024, 30);
  *
  *     PARCIdentity *identity =
  *         parcIdentity_Create(parcIdentityFile_Create(keystoreName, keystorePassword), PARCIdentityFileAsPARCIdentity);

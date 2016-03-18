@@ -92,6 +92,7 @@ LONGBOW_TEST_FIXTURE_SETUP(CreateRelease)
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
 
     CCNxPortalFactory *factory = ccnxPortalFactory_Create(identity);
+    parcIdentityFile_Release(&identityFile);
     parcIdentity_Release(&identity);
 
     longBowTestCase_SetClipBoardData(testCase, factory);
@@ -228,6 +229,7 @@ LONGBOW_TEST_FIXTURE_SETUP(Global)
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
 
     CCNxPortalFactory *factory = ccnxPortalFactory_Create(identity);
+    parcIdentityFile_Release(&identityFile);
     parcIdentity_Release(&identity);
 
     const CCNxPortalAttributes *attributes = &ccnxPortalAttributes_NonBlocking;

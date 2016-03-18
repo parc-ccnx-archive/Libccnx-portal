@@ -108,6 +108,7 @@ LONGBOW_TEST_CASE(CreateAcquireRelease, ccnxPortalFactory_Create)
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
 
     CCNxPortalFactory *factory = ccnxPortalFactory_Create(identity);
+    parcIdentityFile_Release(&identityFile);
     parcIdentity_Release(&identity);
 
     ccnxPortalFactory_Release(&factory);
@@ -128,6 +129,7 @@ LONGBOW_TEST_CASE(CreateAcquireRelease, ccnxPortalFactory_AcquireRelease)
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
 
     CCNxPortalFactory *factory = ccnxPortalFactory_Create(identity);
+    parcIdentityFile_Release(&identityFile);
     parcIdentity_Release(&identity);
 
     CCNxPortalFactory *reference = ccnxPortalFactory_Acquire(factory);
@@ -178,7 +180,8 @@ LONGBOW_TEST_CASE(Global, ccnxPortalFactory_GetIdentity)
     const PARCIdentity *actual = ccnxPortalFactory_GetIdentity(factory);
 
     assertTrue(identity == actual, "Expected the result to be the same as provided to the constructor");
-
+    
+    parcIdentityFile_Release(&identityFile);
     parcIdentity_Release(&identity);
 
     ccnxPortalFactory_Release(&factory);
@@ -209,7 +212,8 @@ LONGBOW_TEST_CASE(Global, ccnxPortalFactory_GetKeyId)
     parcKeyId_Release(&expected);
 
     ccnxPortalFactory_Release(&factory);
-
+    
+    parcIdentityFile_Release(&identityFile);
     parcIdentity_Release(&identity);
 
     parcSecurity_Fini();

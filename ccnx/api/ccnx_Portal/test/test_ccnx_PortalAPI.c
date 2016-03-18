@@ -88,6 +88,7 @@ LONGBOW_TEST_FIXTURE_SETUP(Global)
     PARCIdentity *identity = parcIdentity_Create(identityFile, PARCIdentityFileAsPARCIdentity);
 
     CCNxPortalFactory *factory = ccnxPortalFactory_Create(identity);
+    parcIdentityFile_Release(&identityFile);
     parcIdentity_Release(&identity);
 
     longBowTestCase_SetClipBoardData(testCase, factory);

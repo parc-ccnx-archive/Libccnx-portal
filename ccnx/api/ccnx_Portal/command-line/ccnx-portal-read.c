@@ -84,7 +84,7 @@ reader_writer(CCNxPortalFactory *factory, const char *uri)
                     parcBuffer_Flip(payload);
 
                     PARCBuffer *b = parcBuffer_Acquire(payload);
-                    CCNxContentObject *uob = ccnxContentObject_CreateWithDataPayload(contentname, b);
+                    CCNxContentObject *uob = ccnxContentObject_CreateWithNameAndPayload(contentname, b);
 
                     // missing NULL check, case 1024
 

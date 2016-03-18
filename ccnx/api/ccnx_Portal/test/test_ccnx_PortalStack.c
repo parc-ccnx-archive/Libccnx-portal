@@ -128,7 +128,7 @@ _mockRead(void *privateData, const uint64_t *microSeconds)
 {
     CCNxName *name = ccnxName_Create();
     PARCBuffer *payload = parcBuffer_Allocate(10);
-    CCNxContentObject *object = ccnxContentObject_CreateWithDataPayload(name, payload);
+    CCNxContentObject *object = ccnxContentObject_CreateWithNameAndPayload(name, payload);
     ccnxName_Release(&name);
 
     parcBuffer_Release(&payload);

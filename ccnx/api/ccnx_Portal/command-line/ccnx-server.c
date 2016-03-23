@@ -111,7 +111,7 @@ ccnServe(const PARCIdentity *identity, const CCNxName *listenName, const char *c
 
                 PARCBuffer *payload = makePayload(interestName, commandString);
 
-                CCNxContentObject *contentObject = ccnxContentObject_CreateWithDataPayload(interestName, payload);
+                CCNxContentObject *contentObject = ccnxContentObject_CreateWithNameAndPayload(interestName, payload);
 
                 CCNxMetaMessage *message = ccnxMetaMessage_CreateFromContentObject(contentObject);
                 if (ccnxPortal_Send(portal, message, CCNxStackTimeout_Never) == false) {

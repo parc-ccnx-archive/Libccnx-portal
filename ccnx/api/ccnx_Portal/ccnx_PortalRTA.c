@@ -345,12 +345,13 @@ _ccnxPortalRTA_Listen(void *privateData, const CCNxName *name, const CCNxStackTi
     if (result == true) {
         CCNxMetaMessage *response = _ccnxPortalRTA_Receive(privateData, microSeconds);
 
-        if (ccnxMetaMessage_IsControl(response)) {
-            // TODO: Check that the response was success.
-            result = true;
+        if (response != NULL) {
+            if (ccnxMetaMessage_IsControl(response)) {
+                // TODO: Check that the response was success.
+                result = true;
+            }
+            ccnxMetaMessage_Release(&response);
         }
-
-        ccnxMetaMessage_Release(&response);
     }
 
     ccnxMetaMessage_Release(&message);
@@ -374,12 +375,16 @@ _ccnxPortalRTA_Ignore(void *privateData, const CCNxName *name, const CCNxStackTi
     if (result == true) {
         CCNxMetaMessage *response = _ccnxPortalRTA_Receive(privateData, microSeconds);
 
-        if (ccnxMetaMessage_IsControl(response)) {
-            // TODO: Check that the response was success.
-            result = true;
+        if (response != NULL) {
+            if (ccnxMetaMessage_IsControl(response)) {
+                // TODO: Check that the response was success.
+                result = true;
+            }
+            ccnxMetaMessage_Release(&response);
+        } else {
+            // We got a NULL reponse (probably due to timeout). From Athena, this is a failure.
+            result = false;
         }
-
-        ccnxMetaMessage_Release(&response);
     }
 
     ccnxMetaMessage_Release(&message);

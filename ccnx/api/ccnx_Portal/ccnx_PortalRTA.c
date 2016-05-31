@@ -351,6 +351,10 @@ _ccnxPortalRTA_Listen(void *privateData, const CCNxName *name, const CCNxStackTi
                 result = true;
             }
             ccnxMetaMessage_Release(&response);
+        } else {
+            // We got a NULL reponse (possibly due to timeout). Since we always expect a
+            // response from the forwarder, consider this a failure.
+            result = false;
         }
     }
 
@@ -382,7 +386,8 @@ _ccnxPortalRTA_Ignore(void *privateData, const CCNxName *name, const CCNxStackTi
             }
             ccnxMetaMessage_Release(&response);
         } else {
-            // We got a NULL reponse (probably due to timeout). From Athena, this is a failure.
+            // We got a NULL reponse (possibly due to timeout). Since we always expect a
+            // response from the forwarder, consider this a failure.
             result = false;
         }
     }
